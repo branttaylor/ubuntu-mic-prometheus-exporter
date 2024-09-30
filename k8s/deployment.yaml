@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-mic-prometheus-exporter
+  labels:
+    app: ubuntu-mic-prometheus-exporter
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-mic-prometheus-exporter
+  template:
+    metadata:
+      labels:
+        app: ubuntu-mic-prometheus-exporter
+    spec:
+      containers:
+        - name: ubuntu-mic-prometheus-exporter
+          image: branttaylor/ubuntu-mic-prometheus-exporter:1
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          # env:
+          #   - name: PORT
+          #     value: '8000'
+          #   - name: HOST
+          #     value: '0.0.0.0'
+          #   - name: METRICS_PATH
+          #     value: '/metrics'
+          #   - name: HEALTH_PATH
+          #     value: '/healthz'
+          #   Above commented variables are unneeded if you are using the defaults

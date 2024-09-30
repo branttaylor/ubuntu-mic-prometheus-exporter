@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ubuntu-mic-prometheus-exporter-service
+  namespace: monitoring
+  labels:
+    app: ubuntu-mic-prometheus-exporter
+spec:
+  selector:
+    app: ubuntu-mic-prometheus-exporter
+  ports:
+    - name: prometheus-client
+      port: 8000
