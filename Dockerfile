@@ -1,11 +1,11 @@
 FROM node:alpine3.19
 
 RUN apk update && apk add --no-cache \
-    git && \
+    git \
     alsa-utils \
-    sox \
-    rm -rf /tmp/* /var/cache/apk/* \
-    && mkdir /app
+    sox && \
+    rm -rf /tmp/* /var/cache/apk/* && \
+    mkdir /app
 
 WORKDIR /app
 
